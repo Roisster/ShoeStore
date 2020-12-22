@@ -9,9 +9,11 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.udacity.shoestore.R
 import com.udacity.shoestore.databinding.FragmentShoeBinding
+import com.udacity.shoestore.models.Shoe
 
 class ShoeFragment : Fragment() {
 
@@ -22,7 +24,7 @@ class ShoeFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = DataBindingUtil.inflate(
             inflater,
             R.layout.fragment_shoe,
@@ -32,6 +34,7 @@ class ShoeFragment : Fragment() {
 
         binding.lifecycleOwner = this
         binding.viewModel = shoesVM
+        binding.shoe = Shoe("", "", "")
 
         return binding.root
     }
@@ -39,7 +42,7 @@ class ShoeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        /*shoesVM.validatedData.observe(viewLifecycleOwner, Observer { isValidated ->
+        shoesVM.validatedData.observe(viewLifecycleOwner, Observer { isValidated ->
             if (isValidated) {
                 findNavController().navigate(ShoeFragmentDirections.actionShoeFragmentToShoeListFragment2())
             } else {
@@ -49,7 +52,7 @@ class ShoeFragment : Fragment() {
                     Toast.LENGTH_SHORT
                 ).show()
             }
-        })*/
+        })
 
         binding.btnBack.setOnClickListener {
             findNavController().navigateUp()

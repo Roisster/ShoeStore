@@ -12,18 +12,18 @@ class ShoeSharedVM : ViewModel() {
     val shoeList: LiveData<MutableList<Shoe>>
         get() = _shoeList
 
-    /*private val _validatedData = MutableLiveData<Boolean>()
+    private val _validatedData = MutableLiveData<Boolean>()
     val validatedData: LiveData<Boolean>
-        get() = _validatedData*/
+        get() = _validatedData
 
 
     val shoes = mutableListOf<Shoe>()
 
     fun addShoe(shoe: Shoe?) {
         Log.d("AS", "${shoe}")
-        /*shoe?.let { shoes.add(it) }
+        shoe?.let { shoes.add(it) }
         _shoeList.value = shoes
-        _validatedData.value = true*/
+        _validatedData.value = true
 
     }
 
