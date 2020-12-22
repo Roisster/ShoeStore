@@ -5,6 +5,10 @@
     <data>
 
         <variable
+            name="viewModel"
+            type="com.udacity.shoestore.shoeList.ShoeSharedVM" />
+
+        <variable
             name="shoe"
             type="com.udacity.shoestore.models.Shoe" />
     </data>
@@ -15,6 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:clickable="true"
+        android:onClick="@{(v) -> viewModel.openCard(v, shoe)}"
         app:cardCornerRadius="20dp"
         app:cardElevation="1dp"
         app:cardPreventCornerOverlap="true">

@@ -9,11 +9,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.udacity.shoestore.R
 import com.udacity.shoestore.databinding.FragmentShoeListBinding
 import com.udacity.shoestore.databinding.ShoeItemBinding
+import com.udacity.shoestore.models.Shoe
 
-class ShoeListFragment : Fragment(R.layout.fragment_shoe_list) {
+class ShoeListFragment : Fragment() {
 
     private val viewModel: ShoeSharedVM by activityViewModels()
     private lateinit var binding: FragmentShoeListBinding
@@ -31,7 +33,6 @@ class ShoeListFragment : Fragment(R.layout.fragment_shoe_list) {
         )
 
         viewModel.shoeList.observe(viewLifecycleOwner, Observer { shoes ->
-
             shoes.forEach { shoe ->
                 DataBindingUtil.inflate<ShoeItemBinding>(
                     inflater,
@@ -39,8 +40,10 @@ class ShoeListFragment : Fragment(R.layout.fragment_shoe_list) {
                     binding.llShoeList,
                     true
                 ).also { it.shoe = shoe }
+                    .also { it.viewModel = viewModel }
             }
         })
+
         return binding.root
     }
 
@@ -48,7 +51,7 @@ class ShoeListFragment : Fragment(R.layout.fragment_shoe_list) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.addFab.setOnClickListener {
-            findNavController().navigate(ShoeListFragmentDirections.actionShoeListFragmentToShoeFragment())
+            findNavController().navigate(ShoeListFragmentDirections.actionShoeListFragmentToShoeFragment(null))
         }
 
     }
