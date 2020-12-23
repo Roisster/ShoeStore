@@ -37,6 +37,7 @@ class LoginFragment : Fragment() {
         viewModel.userValidated.observe(viewLifecycleOwner, Observer { userValidated ->
             if (userValidated) {
                 findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToWelcomeFragment())
+                viewModel.userIsIn()
             } else {
                 Toast.makeText(context, "Check for missing inputs", Toast.LENGTH_LONG).show()
             }

@@ -20,4 +20,7 @@ class LoginViewModel : ViewModel() {
         _userValidated.value =
             userMail.isNotEmpty() && userPassword.isNotEmpty()
     }
+    fun userIsIn() {
+        _userValidated.value = false
+    }
 }

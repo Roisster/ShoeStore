@@ -1,19 +1,17 @@
 package com.udacity.shoestore.shoeList
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
+import androidx.navigation.ui.NavigationUI
 import com.udacity.shoestore.R
 import com.udacity.shoestore.databinding.FragmentShoeListBinding
 import com.udacity.shoestore.databinding.ShoeItemBinding
-import com.udacity.shoestore.models.Shoe
 
 class ShoeListFragment : Fragment() {
 
@@ -34,6 +32,7 @@ class ShoeListFragment : Fragment() {
 
         viewModel.shoeList.observe(viewLifecycleOwner, Observer { shoes ->
             shoes.forEach { shoe ->
+
                 DataBindingUtil.inflate<ShoeItemBinding>(
                     inflater,
                     R.layout.shoe_item,
@@ -44,6 +43,19 @@ class ShoeListFragment : Fragment() {
             }
         })
 
+        viewModel.openCard.observe(viewLifecycleOwner, Observer {
+            if (it.second) {
+                findNavController().navigate(
+                    ShoeListFragmentDirections.actionShoeListFragmentToShoeFragment(
+                        it.first
+                    )
+                )
+                viewModel.cardOpened()
+            }
+        })
+
+        setHasOptionsMenu(true)
+
         return binding.root
     }
 
@@ -51,8 +63,20 @@ class ShoeListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.addFab.setOnClickListener {
-            findNavController().navigate(ShoeListFragmentDirections.actionShoeListFragmentToShoeFragment(null))
+            findNavController().navigate(
+                ShoeListFragmentDirections.actionShoeListFragmentToShoeFragment(null)
+            )
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.logout_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return NavigationUI.onNavDestinationSelected(item, requireView().findNavController())
+                || super.onOptionsItemSelected(item)
 
     }
 }

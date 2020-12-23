@@ -8,4 +8,4 @@ data class Shoe(var name: String, var size: Double, var company: String, var des
                 val images: List<String> = mutableListOf()) : Parcelable*/
 
 @Parcelize
-data class Shoe(var name: String, var company: String, var description: String) : Parcelable
+data class Shoe(var name: String, var size: Double, var company: String, var description: String) : Parcelable

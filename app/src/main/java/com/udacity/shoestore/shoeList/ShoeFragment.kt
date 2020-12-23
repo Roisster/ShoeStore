@@ -55,8 +55,10 @@ class ShoeFragment : Fragment() {
         })
 
         viewShoeVM.viewShoe.observe(viewLifecycleOwner, Observer { shoe ->
-            binding.shoe = shoe
-            binding.btnSave.visibility = View.GONE
+            with(binding) {
+                this.shoe = shoe
+                btnSave.visibility = View.GONE
+            }
         })
 
         binding.btnBack.setOnClickListener {
